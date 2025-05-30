@@ -5,24 +5,26 @@
     "MAINTENANCE_MODE": false,
     "iconUnsend": {
         "status": true,
-        "icon": "❤"
+        "icon": "😾"
     },
-    "notiGroup": false,
+    "notiGroup": true,
     "NOTIFICATION": true,
-    "allowInbox": false,
+    "allowInbox": true,
     "commandDisabled": [],
     "eventDisabled": [],
     "autoClean": true,
     "ACCESSTOKEN": "",
-    "BOTNAME": "Lương Trường Khôi",
-    "AMDIN_NAME": "Có lỗi báo mình fix qua link bên dưới:",
-    "FACEBOOK_ADMIN": "https://www.facebook.com/100018277053087",
-    "PREFIX": "/",
+    "BOTNAME": "Rahad er bow😾💝",
+    "AMDIN_NAME": "Rahad",
+    "FACEBOOK_ADMIN": "https://www.facebook.com/profile.php?id=61576242432193",
+    "PREFIX": "-",
     "ADMINBOT": [
-        "100018277053087"
+        "61576341042785",
+        "61574627006558",
+        "61550478164532"
     ],
     "NDH": [
-        "100018277053087"
+        "61576242432193"
     ],
     "DATABASE": {
         "sqlite": {
@@ -74,6 +76,13 @@
         "delayUnsend": 60
     },
     "minecraft": {
+        "APIKEY": ""
+    },
+    "help2": {
+        "autoUnsend": true,
+        "delayUnsend": 500
+    },
+    "slapv2": {
         "APIKEY": ""
     }
 }

@@ -1,13 +1,13 @@
 module.exports.config = {
-  name: "wiki",
-  version: "1.0.1",
-  hasPermssion: 0,
-  credits: "Mirai Team",
-  description: "Tìm mọi thông tin cần biêt thông qua Wikipedia",
-  commandCategory: "Tìm kiếm",
-  usages: "[en] [thông tin cần tìm kiếm]",
-  cooldowns: 1,
-  dependencies: {
+	name: "wiki",
+	version: "1.0.1",
+	hasPermssion: 0,
+	credits: "Mirai Team",
+	description: "Find everything you need to know through Wikipedia",
+	commandCategory: "study",
+	usages: "[en] [information to look for]",
+	cooldowns: 1,
+	dependencies: {
         "wikijs": ""
     }
 }
@@ -26,7 +26,7 @@ module.exports.languages = {
 module.exports.run = ({ event, args, api, getText }) => {
     const wiki = (global.nodemodule["wikijs"]).default;
     let content = args.join(" ");
-    let url = 'https://vi.wikipedia.org/w/api.php';
+    let url = 'https://en.wikipedia.org/w/api.php';
     if (args[0] == "en") {
         url = 'https://en.wikipedia.org/w/api.php'; 
         content = args.slice(1, args.length);

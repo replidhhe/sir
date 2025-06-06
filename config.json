@@ -16,16 +16,13 @@
     "ACCESSTOKEN": "",
     "BOTNAME": "Lương Trường Khôi",
     "AMDIN_NAME": "Cảm ơn bạn, mình đi đây",
-    "FACEBOOK_ADMIN": "https://www.facebook.com/100018277053087",
+    "FACEBOOK_ADMIN": "https://www.facebook.com/share/1AqMNYndBv/",
     "PREFIX": "-",
     "ADMINBOT": [
-        "61576341042785",
-        "61574627006558",
-        "61575867394224",
-        "100094130730104"
+      "61574627006558",
     ],
     "NDH": [
-        "61576341042785"
+        "61574627006558"
     ],
     "DATABASE": {
         "sqlite": {

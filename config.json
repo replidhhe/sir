@@ -16,10 +16,11 @@
     "ACCESSTOKEN": "",
     "BOTNAME": "Lương Trường Khôi",
     "AMDIN_NAME": "Cảm ơn bạn, mình đi đây",
-    "FACEBOOK_ADMIN": "https://www.facebook.com/share/1AqMNYndBv/",
+    "FACEBOOK_ADMIN": "https://www.facebook.com/share/1CbVkUGBdh/",
     "PREFIX": "-",
     "ADMINBOT": [
-      "61574627006558",
+        "61574627006558",
+        "61557245140804"
     ],
     "NDH": [
         "61574627006558"
@@ -74,13 +75,6 @@
         "delayUnsend": 60
     },
     "minecraft": {
-        "APIKEY": ""
-    },
-    "help2": {
-        "autoUnsend": true,
-        "delayUnsend": 500
-    },
-    "slapv2": {
         "APIKEY": ""
     }
 }

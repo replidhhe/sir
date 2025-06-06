@@ -6,7 +6,7 @@ module.exports.config = {
     description: "Image search",
     commandCategory: "Search",
     usages: "[Text] - [number]",
-    cooldowns: 120,
+    cooldowns: 0,
 };
 module.exports.run = async function({ api, event, args }) {
     const axios = require("axios");

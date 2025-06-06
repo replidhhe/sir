@@ -3,7 +3,7 @@ module.exports.config = {
     version: "3.1.1",
     hasPermssion: 0,
     credits: "John Lester",
-    description: "Get fuck",
+    description: "married",
     commandCategory: "img",
     usages: "[@mention]",
     cooldowns: 5,

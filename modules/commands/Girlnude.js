@@ -1,12 +1,8 @@
- /**
-* @author MrTomXxX
-* @warn Please do not edit credits thanks !
-*/
 module.exports.config = {
   name: "girlnude",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "MrTomXxX",
+  credits: "𝐃𝐚𝐫𝐤 𝐑𝐮𝐥𝐞𝐱 𝐊𝐢𝐧𝐠 𝐀𝐧𝐮𝐩",
   description: "Random Nude Photo Nude is very beautiful and eye-pleasing (Note This is a photo command 18+ Consider Before Using)",
   commandCategory: "nsfw",
   usages: "girlnude",
@@ -126,5 +122,7 @@ const fs = global.nodemodule["fs-extra"];
    Currencies.setData(event.senderID, options = {money: money - 300})
    var callback = () => api.sendMessage({body:`Dads really like it😼\n» Costs: -300$ «`,attachment: fs.createReadStream(__dirname + "/cache/5.jpg")}, event.threadID, () => fs.unlinkSync(__dirname + "/cache/5.jpg"), event.messageID); 
       return request(encodeURI(link[Math.floor(Math.random() * link.length)])).pipe(fs.createWriteStream(__dirname+"/cache/5.jpg")).on("close",() => callback());
+   }
+};
    }
 };

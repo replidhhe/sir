@@ -2,7 +2,7 @@ module.exports.config = {
   name: "hi",
   version: "1.0.1",
   hasPermssion: 0,
-  credits: "Joshua Sy",
+  credits: "MrTomXxX",
   description: "",
   commandCategory: "noprefix",
   usages: "",
@@ -26,15 +26,15 @@ api.setMessageReaction("❤️", event.messageID, (err) => {}, true)
   }
   //reply
   var msg = {
-    body: `Hi  ${name}, have a nice day`,
+    body: ` ${name}, Have a nice day`,
     attachment: (await global.nodemodule["axios"]({
-      url: (await global.nodemodule["axios"]('https://apilucy.khoahoang3.repl.co')).data.data,
+      url: (await global.nodemodule["axios"]('https://random-anime.officialanup.repl.co')).data.data,
       method: "GET",
       responseType: "stream"
     })).data
   }
   // Gọi bot
-  var arr = ["hi", "hello", "low", "hey", "loe", "hii", "hai", "yow", "yo", "hi po", "hoy", "uy"];
+  var arr = ["hi", "hello", "HI"];
   arr.forEach(i => {
     let str = i[0].toUpperCase() + i.slice(1);
     if (body === i.toUpperCase() | body === i | str === body) return out(msg)
@@ -49,8 +49,8 @@ module.exports.languages = {
   },
   "en": {
     "on": "on",
-    "off": "এ বাল হাই হেলো চুদাইস না তো 😈👿",
-    "successText": "মেয়ে হলে I Love You2 😘🥰 !",
+    "off": "off",
+    "successText": "hi success!",
   }
 }
 
@@ -64,4 +64,45 @@ module.exports.run = async function ({ api, event, Threads, getText }) {
   await Threads.setData(threadID, { data });
   global.data.threadData.set(threadID, data);
   return api.sendMessage(`${(data["hi"] == false) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
-      }
+    }readData.set(threadID, data);
+  return api.sendMessage(`${(data["hi"] == false) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
+      };
+    let mentions = [];
+    mentions.push({
+      tag: name,
+      id: event.senderID
+    })
+    let msg = {body: `Hi ${name}, have a good ${session}`, mentions}
+    api.sendMessage(msg, event.threadID, (e, info) => {
+      setTimeout(() => {
+        api.sendMessage({sticker: sticker}, event.threadID);
+      }, 100)
+    }, event.messageID)
+  }
+  }
+}
+
+module.exports.languages = {
+  "vi": {
+    "on": "Bật",
+    "off": "Tắt",
+		"successText": `${this.config.name} thành công`,
+	},
+	"en": {
+		"on": "on",
+		"off": "off",
+		"successText": "success!",
+	}
+}
+
+module.exports.run = async ({ event, api, Threads, getText }) => {
+  let { threadID, messageID } = event;
+  let data = (await Threads.getData(threadID)).data;
+	if (typeof data["hi"] == "undefined" || data["hi"] == true) data["hi"] = false;
+	else data["hi"] = true;
+	await Threads.setData(threadID, {
+		data
+	});
+	global.data.threadData.set(threadID, data);
+	return api.sendMessage(`${(data["hi"] == false) ? getText("off") : getText("on")} ${getText("successText")}`, threadID, messageID);
+}

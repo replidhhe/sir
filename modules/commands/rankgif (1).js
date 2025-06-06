@@ -2,7 +2,7 @@ module.exports.config = {
     name: "rankgif",
     version: "1.0.0",
     hasPermssion: 0,
-    credits: "MrTomXxX",
+    credits: "Siêu Đáng Yêu mod JRT",
     description: "Get your current rank on the bot system with a frame based on your level, remake rank_card from canvacord",
     commandCategory: "The group",
     cooldowns: 5,
@@ -370,12 +370,6 @@ module.exports.run = async({ event, api, args, Currencies, Users }) => {
             api.sendMessage({ body: `🔰Name: ${name}\n🌟Top ${rank} \n💌Total Messages: ${infoUser.exp}`, attachment: fs.createReadStream(path, { 'highWaterMark': 128 * 1024 }) }, event.threadID, () => {
                 fs.unlinkSync(path)
                 console.log("finally");
-            }, event.messageID);
-        })
-}
-
-
-("finally");
             }, event.messageID);
         })
 }

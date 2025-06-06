@@ -3,9 +3,9 @@ module.exports.config = {
     name: "hi",
     version: "1.0.1",
     hasPermssion: 0,
-    credits: "MrTomXxX",
+    credits: "Kanichi",
     description: "",
-    commandCategory: "no command marks needed",
+    commandCategory: "không cần dấu lệnh",
     usages: "",
     cooldowns: 0,
     denpendencies: {

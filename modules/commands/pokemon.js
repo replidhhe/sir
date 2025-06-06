@@ -2,7 +2,7 @@ module.exports.config = {
     name: "poke",
     version: "1.0.0",
     hasPermssion: 0,
-    credits: "D-Jukie",
+    credits: "MrTomXxX",
     description: "View information of any 1 pokemon",
     commandCategory: "Utilities",
     usages: "[namePoke]",

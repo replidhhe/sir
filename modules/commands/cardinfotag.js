@@ -1,4 +1,4 @@
-const sendWaiting = true; // enable or disable sending "images in progress, please wait...";
+const sendWaiting = true; // bật hoặc tắt gửi tin nhắn "đang tạo hình ảnh, vui ồng chờ đợi...";
 const textWaiting = "Image initialization, please wait a moment";
 const fonts = "/cache/Play-Bold.ttf"
 const downfonts = "https://drive.google.com/u/0/uc?id=1uni8AiYk7prdrC7hgAmezaGTMH5R8gW8&export=download"
@@ -7,7 +7,7 @@ const fontsInfo = 28
 const colorName = "#00FFFF"
 
 module.exports.config = {
-  name: "cardinfo",
+  name: "cardinfo-tag",
   version: "2.0.0",
   hasPermssion: 0,
   credits: "D-Jukie",
@@ -16,8 +16,8 @@ module.exports.config = {
   usages: "",
   cooldowns: 5,
   dependencies: {
-    "canvas": "",
-    "axios": "",
+    canvas: "",
+    axios: "",
     "fs-extra": "",
   },
 };
@@ -38,10 +38,13 @@ module.exports.run = async function ({ api, event, args, Users }) {
   const Canvas = global.nodemodule["canvas"];
   let pathImg = __dirname + `/cache/1.png`;
   let pathAvata = __dirname + `/cache/2.png`;
-  /*                 */
+  /*  */
+            var mention = Object.keys(event.mentions)[0];
   if(event.type == "message_reply") { uid = event.messageReply.senderID }
-    else uid = event.senderID;
-    const res = await api.getUserInfoV2(uid); 
+    else uid = mention;
+          
+  let tagUser = args.join(" ");
+    const res = await api.getUserInfoV2(mention); 
   let getAvatarOne = (await axios.get(`https://graph.facebook.com/${uid}/picture?height=1500&width=1500&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`, { responseType: 'arraybuffer' })).data;
   let bg = (
     await axios.get(encodeURI(`https://i.imgur.com/tW6nSDm.png`), {
@@ -65,9 +68,10 @@ if(!fs.existsSync(__dirname+`${fonts}`)) {
   let ctx = canvas.getContext("2d");
   ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
   ctx.drawImage(baseAvata, 80, 73, 285, 285);
+
   if (!res.location || res.location === "Không Có Dữ Liệu") res.location = "Not Found";
   if (!res.birthday || res.birthday === "Không Có Dữ Liệu") res.birthday = "Not Found";
-if (!res.relationship_status || res.relationship_status === "Không Có Dữ Liệu") res.relationship_status = "Not Found";
+  if (!res.relationship_status || res.relationship_status === "Không Có Dữ Liệu") res.relationship_status = "Not Found";
   if (!res.follow || res.follow === "Không Có Dữ Liệu") res.follow = "Not Found";
     var gender = res.gender == 'male' ? "Male" : res.gender == 'female' ? "Female" : "Not public";
     var birthday = res.birthday ? `${res.birthday}` : "No information found";

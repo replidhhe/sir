@@ -2,10 +2,10 @@ module.exports.config = {
     name: 'caro',
     version: '1.0.0',
     hasPermssion: 0,
-    credits: 'NTKhang',
+    credits: 'JRT',
     description: 'game cờ caro 5x5',
-    commandCategory: 'Trò Chơi',
-    usages: 'caro @tag,dùng lệnh theo hưỡng dẫn bên cạnh là hiểu',
+    commandCategory: 'Game',
+    usages: '@tag',
     cooldowns: 5,
     dependencies: {
       "fs-extra": "",
@@ -16,7 +16,7 @@ module.exports.config = {
     }
 };
 
-module.exports.handleReply = async ({ handleReply, event, api }) => {
+module.exports.handleReply = async ({ handleReply, event, api ,Users}) => {
   function delay(ms) {
        return new Promise(resolve => setTimeout(resolve, ms));
   };
@@ -24,26 +24,24 @@ module.exports.handleReply = async ({ handleReply, event, api }) => {
     var { threadID, senderID, messageID, body } = event;
     const chalk = global.nodemodule["chalk"];
     var args   = body.split(' ');
-    if(!args[1]) return api.sendMessage("Bạn chưa nhập tọa độ Y", threadID, messageID);
+    if(!args[1]) return api.sendMessage("You have not entered the coordinates Y", threadID, messageID);
     var toadoX = parseInt(args[0]),
         toadoY = parseInt(args[1]);
           //check error tọa độ
-          if(toadoX == NaN || toadoY == NaN) return api.sendMessage("Tọa độ X hoặc Y không hợp lệ", threadID, messageID);
-          if(toadoX > sizeboard) return api.sendMessage("Tọa độ X không được lớn hơn số ô của bàn cờ", threadID, messageID);
-          if(toadoY > sizeboard) return api.sendMessage("Tọa độ Y không được lớn hơn số ô của bàn cờ", threadID, messageID);
+          if(toadoX == NaN || toadoY == NaN) return api.sendMessage("Invalid X or Y coordinates", threadID, messageID);
+          if(toadoX > sizeboard) return api.sendMessage("The X coordinate cannot be larger than the number of squares on the chessboard", threadID, messageID);
+          if(toadoY > sizeboard) return api.sendMessage("The Y coordinate cannot be larger than the number of squares on the chessboard", threadID, messageID);
       //get data game
     var gameint  = global.game[threadID];
     var luot     = gameint.ditruoc;
     var luotuser = gameint.luot[senderID];
     //===========
-    if (global.game[threadID].toadogame.includes(toadoX.toString() + toadoY)) return api.sendMessage('Vị trí này đã được đánh từ trước', threadID, messageID);
-    ///lấy id và tên của đối thủ
-    var arrluot = Object.keys(gameint.luot);
-    var iddoithu = parseInt(arrluot.filter(iddt => iddt != senderID));
-    var namedoithu = ((await api.getUserInfo(iddoithu))[iddoithu]).name;
-    //=============Check lượt===========//
+    if (global.game[threadID].toadogame.includes(toadoX.toString() + toadoY)) return api.sendMessage('This position has been booked before', threadID, messageID);
+
+var _0xb4b2=["\x6C\x75\x6F\x74","\x6B\x65\x79\x73","\x66\x69\x6C\x74\x65\x72","\x6E\x61\x6D\x65","\x67\x65\x74\x44\x61\x74\x61"];var arrluot=Object[_0xb4b2[1]](gameint[_0xb4b2[0]]);var iddoithu=parseInt(arrluot[_0xb4b2[2]]((_0xd327x3)=>{return _0xd327x3!= senderID}));var namedoithu=( await Users[_0xb4b2[4]](iddoithu))[_0xb4b2[3]]
+    //=============Check turns===========//
     if (luotuser != luot) {
-      return api.sendMessage({body: 'Chưa tới lượt của bạn!! Lượt này là của '+namedoithu, mentions: [{tag: namedoithu,id: iddoithu}]}, threadID, messageID);
+      return api.sendMessage({body: `It's not your turn yet!! This turn is for `+namedoithu, mentions: [{tag: namedoithu,id: iddoithu}]}, threadID, messageID);
     };
     if (luot == 0) {
         global.game[threadID].ditruoc = 1;
@@ -56,9 +54,9 @@ module.exports.handleReply = async ({ handleReply, event, api }) => {
         var linkCo = 'https://i.ibb.co/FgtkNM9/Opng.png';
     };
     
-  //d thứ [x+y][x]
+  //d th [x+y][x]
   //X = 4, Y = 2;
-  //set cờ vào data để check WIN;
+  //Set flag in data to check WIN;
   //==============PUSH DATA===========//
   if(toadoY > toadoX) var soptu = toadoY-toadoX;
   else var soptu = toadoX-toadoY;
@@ -73,16 +71,16 @@ module.exports.handleReply = async ({ handleReply, event, api }) => {
     var path1 = __dirname+'/cache/caro1'+threadID+'.png';
     var path2 = __dirname+'/cache/caro2'+threadID+'.png';
     //===========CANVAS============//
-    //vẽ lại boardgame trước sau đó vẽ lên background
-    const boardgame = await Canvas.loadImage(boardbuffer);//board lấy từ handleReply
+    //redraw the boardgame first then draw on the background
+    const boardgame = await Canvas.loadImage(boardbuffer);//board taken from handleReply
     var xboard = boardgame.width,
         yboard = boardgame.height;
     const canvas = Canvas.createCanvas(xboard, yboard);
     let ctx = canvas.getContext('2d');
     ctx.drawImage(boardgame, 0, 0, xboard, yboard);
-    var quanCo = await Canvas.loadImage(linkCo);//lấy ảnh quân cờ
+    var quanCo = await Canvas.loadImage(linkCo);//take pictures of chess pieces
     ctx.drawImage(quanCo, toadoX * sectionSize, toadoY * sectionSize, sectionSize, sectionSize);
-    var boardbuffer = canvas.toBuffer();//vẽ xong board game
+    var boardbuffer = canvas.toBuffer();//finished drawing board game
     //=============BACKGROUND================
     const background = await Canvas.loadImage(path2);
     var xbground = background.width,
@@ -158,7 +156,7 @@ module.exports.handleReply = async ({ handleReply, event, api }) => {
     return {WIN: false};
   };
   
-  var myname = ((await api.getUserInfo(senderID))[senderID]).name;
+ var _0xfb59=["\x6E\x61\x6D\x65","\x67\x65\x74\x44\x61\x74\x61"];var myname=( await Users[_0xfb59[1]](senderID))[_0xfb59[0]]
   //==========CHECK WIN OR NOT==============//
   var CHECKWIN = checkWin(x, y, d, d1, toadoX, toadoY, quanco, sizeboard, sectionSize);
   if(CHECKWIN.WIN == true) {
@@ -178,7 +176,7 @@ module.exports.handleReply = async ({ handleReply, event, api }) => {
   };
   fs.writeFileSync(path2, canvasbg.toBuffer());
   api.unsendMessage(handleReply.messageID, () => {
-    api.sendMessage({body: 'Reply tin nhắn này kèm theo tọa độ X Y để đánh quân cờ, ví dụ:\n1 5\nLượt tiếp theo là của '+namedoithu, attachment: fs.createReadStream(path2), mentions: [{
+    api.sendMessage({body: 'Reply to this message with X Y coordinates to play chess pieces, for example:\n1 5\nThe next turn is for '+namedoithu, attachment: fs.createReadStream(path2), mentions: [{
       tag: namedoithu,
       id: iddoithu
     }]},threadID, (e, info) => {
@@ -217,10 +215,10 @@ module.exports.run = async ({ event, api, args }) => {
     }
     
     if (global.game[threadID].author) {
-        return api.sendMessage('Nhóm này đã có bàn cờ được tạo, vui lòng kết thúc bàn cờ bàng cách chat "/caro clear" .', threadID, messageID);
+        return api.sendMessage('This group already has a chessboard created, please end the board by chatting "$caro clear"', threadID, messageID);
     };
     var player2 = Object.keys(event.mentions)[0];
-    if(!player2) return api.sendMessage("Cần tag người bạn muốn chơi cùng!!", event.threadID, event.messageID);
+    if(!player2) return api.sendMessage("Need to tag someone you want to play with!!", event.threadID, event.messageID);
     global.game[threadID] = {
         luot: {
             [senderID]: 1,
@@ -310,9 +308,9 @@ module.exports.run = async ({ event, api, args }) => {
       fs.writeFileSync(__dirname+'/cache/bold-font.ttf', Buffer.from(getfont, "utf-8"));
     };
     Canvas.registerFont(__dirname+'/cache/bold-font.ttf', {
-		family: "caro",
-		weight: "regular",
-		style: "normal"
+        family: "caro",
+        weight: "regular",
+        style: "normal"
     });
     ctxx.font = "bold 36px caro";
     //vẽ board lên background
@@ -338,7 +336,7 @@ module.exports.run = async ({ event, api, args }) => {
     ctxx.drawImage(logoVS, xbground/2-200/2, (320-200)/2, 200, 200);
     //ctxx.drawImage(logoVS, 10,10,200,200);
     fs.writeFileSync(path2, canvasbg.toBuffer());
-    api.sendMessage({body: "Tạo ván cờ caro thành công, bạn đi trước, reply tin nhắn này kèm theo tọa độ X Y để đánh quân cờ, ví dụ:\n1 5", attachment: fs.createReadStream(path2)}, threadID, (e, info) => {
+    api.sendMessage({body: "Create a successful checkerboard game, you go first, reply to this message with X Y coordinates to play chess pieces, for example:\n1 5", attachment: fs.createReadStream(path2)}, threadID, (e, info) => {
             client.handleReply.push({
                 name: this.config.name,
                 author: senderID,
@@ -354,4 +352,3 @@ module.exports.run = async ({ event, api, args }) => {
         }
     );
 };
-

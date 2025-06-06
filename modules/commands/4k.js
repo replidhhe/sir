@@ -1,41 +1,84 @@
 module.exports.config = {
-  name: "4k",
+  name: "girl",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "",
-  description: "",
-  commandCategory: "Tiện ích",
-  usages: "[reply/link]",
-  cooldowns: 0
+  credits: "tdunguwu",
+  description: "lmao",
+  commandCategory: "Other",
+  usages: "",
+    cooldowns: 0,
 };
-
 module.exports.run = async function({ api, event, args }) {
-  const fs = global.nodemodule["fs-extra"];
-  const axios = require('axios').default;
-  const isLink = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(args[0]);
-  var linkUp = (event.messageReply?.attachments?.[0]?.url) || (isLink ? args[0] : '');
-  if (!linkUp) {
-    return api.sendMessage('Vui lòng reply 1 ảnh hoặc nhập link ảnh!', event.threadID, event.messageID);
-  }
-  try {
-    api.sendMessage("🔄 Đang tăng độ phân giải cho ảnh, chờ một chút...", event.threadID);
-    if (isLink) {
-      const response = await axios.get(linkUp, { responseType: "arraybuffer" });
-      fs.writeFileSync(__dirname + `/cache/input_image.png`, Buffer.from(response.data, "binary"));
-    } 
-    else {
-      const res = await axios.get(`https://api.sumiproject.net/imgur?link=${encodeURIComponent(linkUp)}`);
-      linkUp = res.data.uploaded.image;
+    const axios = require("axios")
+    const request = require("request")
+    const fs = require("fs-extra")
+    const res = await axios.get(`https://api.reiyuura.me/api/anime/wallpaper2`);
+    var data = res.data.result;
+    var msg = [];
+    let img1 = `${res.data.result[0].image}`;
+    let img2 = `${res.data.result[1].image}`;
+    let img3 = `${res.data.result[2].image}`;
+    let img4 = `${res.data.result[3].image}`;
+    let img5 = `${res.data.result[4].image}`;
+	let img6 = `${res.data.result[5].image}`;
+	let img7 = `${res.data.result[6].image}`;
+	let img8 = `${res.data.result[7].image}`;
+	let img9 = `${res.data.result[8].image}`;
+
+    let imgs1 = (await axios.get(`${img1}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img1.png", Buffer.from(imgs1, "utf-8"));
+    let imgs2 = (await axios.get(`${img2}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img2.png", Buffer.from(imgs2, "utf-8"));
+    let imgs3 = (await axios.get(`${img3}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img3.png", Buffer.from(imgs3, "utf-8"));
+    let imgs4 = (await axios.get(`${img4}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img4.png", Buffer.from(imgs4, "utf-8"));
+    let imgs5 = (await axios.get(`${img5}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img5.png", Buffer.from(imgs5, "utf-8"));
+	let imgs6 = (await axios.get(`${img6}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img6.png", Buffer.from(imgs6, "utf-8"));
+	let imgs7 = (await axios.get(`${img7}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img7.png", Buffer.from(imgs7, "utf-8"));
+	let imgs8 = (await axios.get(`${img8}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img8.png", Buffer.from(imgs8, "utf-8"));
+	let imgs9 = (await axios.get(`${img9}`, {
+        responseType: 'arraybuffer'
+    })).data;
+    fs.writeFileSync(__dirname + "/cache/img9.png", Buffer.from(imgs9, "utf-8"));
+
+    var allimage = [];
+    allimage.push(fs.createReadStream(__dirname + "/cache/img1.png"));
+    allimage.push(fs.createReadStream(__dirname + "/cache/img2.png"));
+    allimage.push(fs.createReadStream(__dirname + "/cache/img3.png"));
+    allimage.push(fs.createReadStream(__dirname + "/cache/img4.png"));
+    allimage.push(fs.createReadStream(__dirname + "/cache/img5.png"));
+	allimage.push(fs.createReadStream(__dirname + "/cache/img6.png"));
+	allimage.push(fs.createReadStream(__dirname + "/cache/img7.png"));
+	allimage.push(fs.createReadStream(__dirname + "/cache/img8.png"));
+	allimage.push(fs.createReadStream(__dirname + "/cache/img9.png"));
+	
+    {
+        msg += `here is the picture`
     }
-    const upscaleRes = await axios.get(`https://www.hungdev.id.vn/ai/4k?apikey=HUNGDEV_ESmhnJ6Mem&url=${encodeURIComponent(linkUp)}`);
-    const upscaleImageLink = upscaleRes.data.data; 
-    const imageResponse = await axios.get(upscaleImageLink, { responseType: "arraybuffer" });
-    fs.writeFileSync(__dirname + `/cache/upscaled_image.png`, Buffer.from(imageResponse.data, "binary"));
+    
     return api.sendMessage({
-      body: `Ảnh đã được làm nét xong!`,
-      attachment: fs.createReadStream(__dirname + `/cache/upscaled_image.png`)
-    }, event.threadID, () => fs.unlinkSync(__dirname + `/cache/upscaled_image.png`), event.messageID);
-  } catch (e) {
-    return api.sendMessage(`Đã xảy ra lỗi: ${e.message}`, event.threadID, event.messageID);
-  }
-};
+        body: msg,
+        attachment: allimage
+    }, event.threadID);
+}
